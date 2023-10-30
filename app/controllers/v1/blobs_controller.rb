@@ -1,16 +1,19 @@
 class V1::BlobsController < ApplicationController
   def create
     begin
-      @blob = Blob.new(blob_params)
+      blob = Blob.new(blob_params)
 
       storage_type = params[:storage_type].nil? ? :local : params[:storage_type]
       storage_service = Factory::StorageFactory.make_storge(storage_type.to_sym)
-      @blob.storage_backend = storage_service
 
-      if @blob.save
-        render json: @blob, status: status
+      blob.storage_backend = storage_service
+      blob.storage_backend.data = params[:data]
+      blob.store_file(blob_params[:blob_id])
+
+      if blob.save
+        render json: serialize(blob), status: status
       else
-        render json: @blob.errors, status: :unprocessable_entity
+        render json: blob.errors, status: :unprocessable_entity
       end
     rescue RuntimeError => e
       data = {
@@ -22,9 +25,34 @@ class V1::BlobsController < ApplicationController
     end
   end
 
+  def show
+    blob = Blob.find_by blob_id: params[:id]
+
+    unless blob.nil?
+      render json: serialize(blob), status: status
+    else
+      render json: { error: 'File not found' }, status: :not_found
+    end
+
+  end
+
 
   private
-    def blob_params
-      params.require(:blob).permit(:blob_id, :data)
-    end
+  def blob_params
+    params.require(:blob).permit(:blob_id)
+  end
+
+  def serialize(blob)
+    #custom quick serialzation
+    {
+      id: blob.blob_id,
+      image: {
+        file: {
+          contents: blob.storage_backend.data
+        }
+        },
+        size: blob.size,
+        created_at: blob.created_at
+    }
+  end
 end

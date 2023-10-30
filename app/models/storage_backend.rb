@@ -2,7 +2,7 @@ class StorageBackend < ApplicationRecord
 
   belongs_to :blob
 
-  def store_file(file)
+  def store_file(encoded_file, blob_id)
     raise "No implemented error"
   end
 
