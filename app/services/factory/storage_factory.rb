@@ -4,11 +4,12 @@ module Factory
   STORAGE_TYPES = {
                     local: :local_storage,
                     s3: :s3_storage,
-                    datbase: :database_storage
+                    database: :database_storage
                   }
 
     class << self
       def make_storge(storage_type)
+        raise "Not supported storage" if STORAGE_TYPES[storage_type].nil?
         send STORAGE_TYPES[storage_type]
       end
 
@@ -23,7 +24,7 @@ module Factory
       end
 
       def database_storage
-        LocalStorage.new
+        DatabaseStorage.new
       end
     end
   end

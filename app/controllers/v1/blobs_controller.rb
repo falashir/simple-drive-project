@@ -1,14 +1,25 @@
 class V1::BlobsController < ApplicationController
   def create
-    @blob = Blob.new(blob_params)
-    # @storage_service = Factory::StorageFactory.make_storge(type)
-    # StorageBackend.new
-    # x = @storage_service.set_storage_factory(:s3)
+    begin
+      @blob = Blob.new(blob_params)
 
+      storage_type = params[:storage_type].nil? ? :local : params[:storage_type]
+      storage_service = Factory::StorageFactory.make_storge(storage_type.to_sym)
+      @blob.storage_backend = storage_service
 
-    puts @blob.inspect
+      if @blob.save
+        render json: @blob, status: status
+      else
+        render json: @blob.errors, status: :unprocessable_entity
+      end
+    rescue RuntimeError => e
+      data = {
+        status: 400,
+        error: e.message
+      }
 
-    # render json: data, status: status
+      render json: data, status: :bad_request
+    end
   end
 
 
@@ -16,5 +27,4 @@ class V1::BlobsController < ApplicationController
     def blob_params
       params.require(:blob).permit(:blob_id, :data)
     end
-
 end
