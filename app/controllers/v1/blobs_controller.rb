@@ -8,6 +8,9 @@ class V1::BlobsController < ApplicationController
 
       blob.storage_backend = storage_service
       blob.storage_backend.data = params[:data]
+
+      raise 'Cannot decode this data!' unless blob.is_storage_backend_valid?
+
       blob.store_file
 
       if blob.save
@@ -24,7 +27,6 @@ class V1::BlobsController < ApplicationController
       render json: data, status: :bad_request
     end
   end
-
   def show
     blob = Blob.find_by blob_id: params[:id]
     unless blob.nil?
@@ -43,7 +45,6 @@ class V1::BlobsController < ApplicationController
   end
 
   def serialize(blob)
-    #custom quick serialzation
     {
       id: blob.blob_id,
       image: {

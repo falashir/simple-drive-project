@@ -4,6 +4,10 @@ class DatabaseStorage < StorageBackend
               message: "Cannot decode this data!" }
 
   def store_file(blob)
-    puts "database storage -> #{blob}"
+    Reusable::DatabaseStoring.create_file(blob)
+  end
+
+  def retrieve_file
+    self.data = Reusable::DatabaseStoring.fetch_file(self.blob)
   end
 end
