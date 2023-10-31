@@ -1,5 +1,5 @@
 module Factory
-  class StorageFactory
+  module StorageFactory
 
   STORAGE_TYPES = {
                     local: :local_storage,

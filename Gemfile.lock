@@ -60,6 +60,9 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    aws-eventstream (1.2.0)
+    aws-sigv4 (1.6.1)
+      aws-eventstream (~> 1, >= 1.0.2)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -160,6 +163,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  aws-sigv4
   bootsnap (>= 1.4.4)
   byebug
   listen (~> 3.3)

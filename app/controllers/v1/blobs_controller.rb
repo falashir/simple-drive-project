@@ -8,7 +8,7 @@ class V1::BlobsController < ApplicationController
 
       blob.storage_backend = storage_service
       blob.storage_backend.data = params[:data]
-      blob.store_file(blob_params[:blob_id])
+      blob.store_file
 
       if blob.save
         render json: serialize(blob), status: status
@@ -27,8 +27,8 @@ class V1::BlobsController < ApplicationController
 
   def show
     blob = Blob.find_by blob_id: params[:id]
-
     unless blob.nil?
+      blob.retrieve_file
       render json: serialize(blob), status: status
     else
       render json: { error: 'File not found' }, status: :not_found

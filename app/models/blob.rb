@@ -3,11 +3,11 @@ class Blob < ApplicationRecord
 
   has_one :storage_backend
 
-  def store_file(blob_id)
-    self.storage_backend.store_file(self.storage_backend.data, blob_id)
+  def store_file()
+    self.storage_backend.store_file(self)
   end
 
-  def retrieve_file(blob_id)
-    self.storage_backend.retrieve_file(blob_id)
+  def retrieve_file
+    self.storage_backend.retrieve_file
   end
 end
