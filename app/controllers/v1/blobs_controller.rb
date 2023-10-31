@@ -51,7 +51,7 @@ class V1::BlobsController < ApplicationController
         file: {
           contents: blob.storage_backend.data
         }
-        },
+      },
         size: blob.size,
         created_at: blob.created_at
     }
