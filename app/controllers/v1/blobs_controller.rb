@@ -1,9 +1,8 @@
 class V1::BlobsController < ApplicationController
+  before_action :is_valid_token, except: :user_token
 
   def create
     begin
-      raise "Unauthorized" unless is_valid_token?(request.headers)
-
       blob = Blob.new(blob_params)
 
       storage_type = params[:storage_type].nil? ? :local : params[:storage_type]
@@ -30,10 +29,9 @@ class V1::BlobsController < ApplicationController
       render json: data, status: :bad_request
     end
   end
+
   def show
     begin
-      raise "Unauthorized" unless is_valid_token?(request.headers)
-
       blob = Blob.find_by blob_id: params[:id]
       unless blob.nil?
         blob.retrieve_file
@@ -48,26 +46,23 @@ class V1::BlobsController < ApplicationController
 
   end
 
-
   def user_token
     begin
       password = params[:password] unless params[:password].nil?
-      raise "Not correct passord!" if password != "password"
-      payload = { data: password }
+      raise "Wrong passord!" if password != "password"
 
+      payload = { data: password }
       token = JWT.encode payload, nil, 'none'
 
       data = {
-        authorization: "Bearer #{token}"
+        auth_token: token
       }
 
       render json: data, status: status
     rescue => e
-      render json: e.message, status: :bad_request
+      render json: { data: e.message }, status: :unauthorized
     end
   end
-
-
 
   private
   def blob_params
@@ -87,17 +82,22 @@ class V1::BlobsController < ApplicationController
     }
   end
 
-  def is_valid_token?(headers)
+  def is_valid_token
     begin
-      if headers.key?('Authorization')
-        token = headers[:Authorization].split(" ")[1]
+      if request.headers.key?('Authorization')
+        token = request.headers[:Authorization].split(" ")[1]
         decoded_token = JWT.decode token, nil, false
         data = decoded_token.reduce Hash.new, :merge
         passowd = data["data"].to_s
-        passowd == "password"
+
+        puts passowd == "password"
+
+        raise "Unauthorized" unless passowd == "password"
+      else
+        raise "Unauthorized"
       end
-    rescue
-      raise "Invalid Token"
+    rescue => e
+      render json: { data: e.message, auth: "Unauthorized" } , status: :unauthorized
     end
   end
 
