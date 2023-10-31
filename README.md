@@ -21,7 +21,6 @@ Create a Postgresql user named as `postgres`
 cd simple-drive-project
 bundle install
 rails db:create
-rails db:migrate
 rails s
 ```
 ✨ The application should be running on `localhost:3000`✨
