@@ -56,6 +56,7 @@ Services types keys:
 - `local`
 - `s3`
 - `database`
+
 Others are not supported
 
 Request body:
