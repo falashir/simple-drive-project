@@ -4,18 +4,18 @@ The idea of this project is to design a Ruby on Rails application that provides 
 
 Think of this project as developing a simple object storage system that provides a single interface for multiple storage backends choices, such as:
 - AWS S3 bucket
-- Local storage
+- Local storage, the directory path is `<RAILS_ROOT>/file_storage/local_storage/`
 - Database table
 
 Based on some configuration -in this case from queryParams- set the storage service.
 
-For the technical details:
+# For the technical details:
 
 - Ruby version -> 2.6.5
 - Rails version ->  6.1.7.6
 
 Once you clone this repositiry do these commands:
-Create a Postgresql user named as `postgres`
+For simple purpos, I set Postgresql user named as the defaulf one `postgres` to avoid permission issues
 
 ```sh
 cd simple-drive-project
@@ -31,13 +31,13 @@ To use the application you need to sign in by sending
 Body should have password -for simple pupose only-
 ```
 {
-    "password": "password"
+  "password": "password"
 }
 ```
 Then you will get response of the token
 ```
 {
-    "auth_token": "eyJhbGciOiJub25lIn0.eyJkYXRhIjoicGFzc3dvcmQifQ."
+  "auth_token": "eyJhbGciOiJub25lIn0.eyJkYXRhIjoicGFzc3dvcmQifQ."
 }
 ```
 This token should be used as `Bearer` token for the other features.
@@ -57,8 +57,8 @@ Others are not supported
 Request body:
 ```
 {
-    "blob_id": "your-file-id",
-    "data": "your-encoded-Base64-file"
+  "blob_id": "your-file-id",
+  "data": "your-encoded-Base64-file"
 }
 ```
 
@@ -66,12 +66,12 @@ Request body:
 Response:
 ```
 {
-    "blob_id": "your-file-id",
-    "image": {
-        "file": "your-encoded-Base64-file"
-        },
-    "size": 4208,
-    "created_at": "2023-10-31T11:59:12.819Z"
+  "blob_id": "your-file-id",
+  "image": {
+      "file": "your-encoded-Base64-file"
+      },
+  "size": 4208,
+  "created_at": "2023-10-31T11:59:12.819Z"
 }
 ```
 
@@ -82,11 +82,11 @@ To retrieve the file use this endpoint
 Response:
 ```
 {
-    "blob_id": "your-file-id",
-    "image": {
-        "file": "your-encoded-Base64-file"
-        },
-    "size": 4208,
-    "created_at": "2023-10-31T11:59:12.819Z"
+  "blob_id": "your-file-id",
+  "image": {
+      "file": "your-encoded-Base64-file"
+      },
+  "size": 4208,
+  "created_at": "2023-10-31T11:59:12.819Z"
 }
 ```

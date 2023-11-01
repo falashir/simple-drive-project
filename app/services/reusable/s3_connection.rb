@@ -84,7 +84,7 @@ module Reusable
 
       private
       def set_blob_size(blob, decoded_data)
-        dir = File.dirname("file_storage/local_storage/tmp")
+        DIR = Rails.root.join("file_storage", "local_storage")
         new_file = File.new("#{dir}/#{blob.blob_id}.png", 'wb')
         new_file.write(decoded_data)
         blob.size = new_file.size

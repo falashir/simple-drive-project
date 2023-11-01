@@ -4,7 +4,7 @@ module Reusable
   module DatabaseStoring
     class << self
 
-      DIR = File.dirname("file_storage/local_storage/tmp")
+      DIR = Rails.root.join("file_storage", "local_storage")
 
       def create_file(blob)
         blob_id = blob.blob_id
