@@ -1,4 +1,5 @@
 # Summary
+
 This project is designed and built for the assignment I have been assigned to during the hiring process.
 The idea of this project is to design a Ruby on Rails application that provides APIs to store and retrieve objects/files using an id, name or a path.
 
@@ -25,6 +26,7 @@ rails s
 ```
 ✨ The application should be running on `localhost:3000`✨
 
+
 To use the application you need to sign in by sending
 `POST  /v1/user_token`
 
@@ -40,8 +42,10 @@ Then you will get response of the token
   "auth_token": "eyJhbGciOiJub25lIn0.eyJkYXRhIjoicGFzc3dvcmQifQ."
 }
 ```
-This token should be used as `Bearer` token for the other features.
+***This token should be used as `Bearer` token for the other features.***
 
+
+# Storing a Blob of Data
 
 To send the file(`for simple pupose - I assumed this file is image/png format`) use this endpoint `POST  /v1/blobs`
 
@@ -75,9 +79,9 @@ Response:
 }
 ```
 
+# Retrieving a Blob
 
-To retrieve the file use this endpoint
-`GET  /v1/blobs/:id`
+To retrieve the file use this endpoint `GET  /v1/blobs/:id`
 
 Response:
 ```
