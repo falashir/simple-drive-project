@@ -11,8 +11,6 @@ class V1::BlobsController < ApplicationController
       blob.storage_backend = storage_service
       blob.storage_backend.data = params[:data]
 
-      raise 'Cannot decode this data!' unless blob.is_storage_backend_valid?
-
       blob.store_file
 
       if blob.save
@@ -88,8 +86,6 @@ class V1::BlobsController < ApplicationController
         data = decoded_token.reduce Hash.new, :merge
         passowd = data["data"].to_s
 
-        puts passowd == "password"
-
         raise "Unauthorized" unless passowd == "password"
       else
         raise "Unauthorized"
@@ -98,5 +94,4 @@ class V1::BlobsController < ApplicationController
       render json: { data: e.message, auth: "Unauthorized" } , status: :unauthorized
     end
   end
-
 end

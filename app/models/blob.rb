@@ -4,6 +4,8 @@ class Blob < ApplicationRecord
   validates :blob_id, presence: true, uniqueness: { case_sensitive: false }
 
   def store_file()
+    raise 'Cannot decode this data!' unless self.storage_backend.valid?
+
     self.storage_backend.store_file(self)
   end
 
