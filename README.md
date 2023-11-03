@@ -54,7 +54,7 @@ Optionally you can set the service type as queryParam -for simple purpose-, if i
 
 Services types keys:
 - `local`
-- `s3`
+- `s3` *-> I am not allowed to use any S3 library.*
 - `database`
 
 Others are not supported
