@@ -15,7 +15,7 @@ module Reusable
 
       def send_to_s3(blob)
         decoded_data = Base64.decode64(blob.storage_backend.data)
-        set_blob_size(blob, decoded_data)
+        set_blob_size(blob)
 
         s3_object_key = "#{blob.blob_id}.png"
         endpoint = "https://#{S3_bucket}.s3.amazonaws.com/#{s3_object_key}"
@@ -83,12 +83,9 @@ module Reusable
       end
 
       private
-      def set_blob_size(blob, decoded_data)
-        DIR = Rails.root.join("file_storage", "local_storage")
-        new_file = File.new("#{dir}/#{blob.blob_id}.png", 'wb')
-        new_file.write(decoded_data)
-        blob.size = new_file.size
-        File.delete("#{dir}/#{blob.blob_id}.png")
+      def set_blob_size(blob)
+        Reusable::LocalBlob.create_file(blob)
+        Reusable::LocalBlob.delete_file(blob)
       end
     end
   end

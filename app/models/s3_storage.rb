@@ -5,6 +5,6 @@ class S3Storage < StorageBackend
   end
 
   def retrieve_file
-    self.data = Reusable::S3Connection.retrieve_from_s3(self.blob)
+    data = Reusable::S3Connection.retrieve_from_s3(blob)
   end
 end

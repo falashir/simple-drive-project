@@ -4,23 +4,9 @@ module Reusable
   module DatabaseStoring
     class << self
 
-      DIR = Rails.root.join("file_storage", "local_storage")
-
       def create_file(blob)
-        blob_id = blob.blob_id
-        encoded_file = blob.storage_backend.data
-
-        FileUtils.mkdir_p(DIR) unless File.directory?(DIR)
-
-        encoded_blob = encoded_file&.include?(",") ? encoded_file.split(",")[1] : encoded_file
-        new_file = File.new("#{DIR}/#{blob_id}.png", 'wb')
-
-        file = Base64.decode64(encoded_blob)
-        new_file.write(file)
-
-        blob.size = new_file.size
-
-        File.delete("#{DIR}/#{blob.blob_id}.png")
+        Reusable::LocalBlob.create_file(blob)
+        Reusable::LocalBlob.delete_file(blob)
       end
 
       def fetch_file(blob)

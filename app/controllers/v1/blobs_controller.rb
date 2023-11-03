@@ -68,6 +68,17 @@ class V1::BlobsController < ApplicationController
   end
 
   def serialize(blob)
+    puts "blob.inspects"
+    puts "blob.inspects"
+    puts "blob.inspects"
+    puts "blob.inspects"
+    puts "blob.inspects"
+    puts "blob.inspects"
+    puts "blob.inspects"
+    puts "blob.inspects"
+    puts "blob.inspects"
+    puts "blob.inspects"
+    puts blob.storage_backend.data
     {
       id: blob.blob_id,
       image: {

@@ -14,6 +14,6 @@ class LocalStorage < StorageBackend
   end
 
   def retrieve_file
-    self.data = Reusable::LocalBlob.fetch_file(self.blob)
+    data = Reusable::LocalBlob.fetch_file(blob)
   end
 end

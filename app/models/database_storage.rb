@@ -8,6 +8,6 @@ class DatabaseStorage < StorageBackend
   end
 
   def retrieve_file
-    self.data = Reusable::DatabaseStoring.fetch_file(self.blob)
+    data = Reusable::DatabaseStoring.fetch_file(blob)
   end
 end
