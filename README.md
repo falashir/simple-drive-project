@@ -4,7 +4,7 @@ This project is designed and built for the assignment I have been assigned to du
 The idea of this project is to design a Ruby on Rails application that provides APIs to store and retrieve objects/files using an id, name or a path.
 
 Think of this project as developing a simple object storage system that provides a single interface for multiple storage backends choices, such as:
-- AWS S3 bucket
+- AWS S3 bucket, `I am not allowed to use any S3 library.`
 - Local storage, the directory path is `<RAILS_ROOT>/file_storage/local_storage/`
 - Database table
 
@@ -54,7 +54,7 @@ Optionally you can set the service type as queryParam -for simple purpose-, if i
 
 Services types keys:
 - `local`
-- `s3` *-> I am not allowed to use any S3 library.*
+- `s3`
 - `database`
 
 Others are not supported
